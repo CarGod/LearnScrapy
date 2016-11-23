@@ -41,6 +41,13 @@ class QuotesSpider(scrapy.Spider):
         也可以是一个生成器函数。也可以使用start_urls名称的
         列表来代替。
         后面的请求，也将通过这个方法来获取。
+        这将会使用默认实现的一个start_requests方法来处理请求。
+        start_urls = [
+            'http://quotes.toscrape.com/page/1/',
+            'http://quotes.toscrape.com/page/2/',
+        ]
+        并且会默认调用一个叫做parse的方法，即使我们没有指定，这一切
+        也是他默认会去做的。
     """
     def start_requests(self):
         urls = [
@@ -67,3 +74,12 @@ class QuotesSpider(scrapy.Spider):
             f.write(response.body)
         # 在控制台输出日志内容
         self.log('Saved file {0}'.format(filename))
+
+"""
+    学习如何使用Scrapy提取数据，使用Scrapy的交互式shell最好。
+    可以使用下面的命令进入交互环境：
+    scrapy shell "http://quotes.toscrape.com/page/1/"
+    如果是在其他系统上运行，url应该使用()括起来，不然携带&符号的url
+    将不起作用。
+    如果是windows，需要使用双引号包裹url，而不是单引号。
+"""

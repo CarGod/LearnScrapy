@@ -8,6 +8,7 @@
 """
     运行：
         scrapy runspider quotes_spider.py -o quotes.json
+        
         后面的参数，是使用feed导出的，可以轻松的更改格式。
         如：xml，csv，也可以通过编写项目管道存储在数据库中。
 """
