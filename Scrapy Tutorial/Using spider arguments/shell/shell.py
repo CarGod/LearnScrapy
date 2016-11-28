@@ -188,8 +188,86 @@
     scrapy shell [url]
 
     # ------------------------------------------------
-    # parse 
+    # parse 获取指定的url，并使用它的parse来解析
     # 是否需要一个项目：是
+    # 可选参数
+    """
+        --spider=SPIDER: 绕过蜘蛛自动检测和强制使用特定的蜘蛛
+        --a NAME=VALUE: 设置蜘蛛参数（可以重复）
+        --callback or -c: spider方法用作解析响应的回调
+        --pipelines: 通过管道处理项目
+        --rules or -r: 使用CrawlSpider规则来发现用于解析响应的回调（即，spider方法）
+        --noitems: 不显示抓取的项目
+        --nolinks: 不显示提取的链接
+        --nocolour: 避免使用pygments来着色输出
+        --depth or -d: 深度级别，请求应该递归地遵循（默认值：1）
+        --verbose or -v: 显示每个深度级别的信息
+    """
+    # 用法示例
+    """
+        $ scrapy parse http://www.example.com/ -c parse_item
+        [ ... scrapy log lines crawling example.com spider ... ]
 
+        >>> STATUS DEPTH LEVEL 1 <<<
+        # Scraped Items  ------------------------------------------------------------
+        [{'name': u'Example item',
+         'category': u'Furniture',
+         'length': u'12 cm'}]
 
+        # Requests  -----------------------------------------------------------------
+        []
+    """
+    scrapy parse <url> [options]
+
+    # ------------------------------------------------
+    # settings 或许scrapy设置的值，项目中使用获取项目的设置，项目外使用获得scrapy默认的设置值
+    # 是否需要一个项目：否
+    # 用法示例
+    """
+        $ scrapy settings --get BOT_NAME
+        scrapybot
+        $ scrapy settings --get DOWNLOAD_DELAY
+        0
+    """
+    scrapy settings [options]
+
+    # ------------------------------------------------
+    # runspider 运行一个单独的py文件中的爬虫，而不必创建一个scrapy项目
+    # 是否需要一个项目：否
+    # 用法示例
+    """
+        $ scrapy runspider myspider.py
+        [ ... spider starts crawling ... ]
+    """
+    scrapy runspider <spider_file.py>
+
+    # ------------------------------------------------
+    # version 打印scrapy的版本，如果和-v一起使用，还会打印Python，Twisted和Platform的信息
+    # 是否需要一个项目：否
+    scrapy version [-v]
+    
+    # ------------------------------------------------
+    # 是否需要一个项目：否
+    # bench 运行快速基准测试
+
+    """
+        同时还可以添加自定义命令，详情请参阅：
+        https://github.com/scrapy/scrapy/tree/master/scrapy/commands
+
+        # 您还可以通过在库setup.py文件的入口点中添加scrapy.commands部分，
+        # 从外部库中添加Scrapy命令。
+
+        # 例子
+        COMMANDS_MODULE = 'mybot.commands'
+
+        from setuptools import setup, find_packages
+
+        setup(name='scrapy-mymodule',
+          entry_points={
+            'scrapy.commands': [
+              'my_command=my_scrapy_module.commands:MyCommand',
+            ],
+          },
+         )
+    """
 """
